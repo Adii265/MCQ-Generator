@@ -1,0 +1,528 @@
+Monitoring applications define an important
+class of applications used in wireless sensor networks. In these applications the network perceives the environment and searches for event
+occurrences (phenomena) by sensing different
+physical properties, such as temperature, humidity, pressure, ambient light, movement, and presence (for target tracking). In such cases the
+location information of both phenomena and
+nodes is usually required for tracking and correlation purposes. In this work we summarize most
+of the concepts related to localization systems for
+WSNs as well as how to localize the nodes in
+these networks (which allows the localization of
+phenomena). By dividing the localization systems
+into three distinct components — distance/angle
+estimation, position computation, and localization algorithm — besides providing a didactic
+viewpoint, we show that these components can
+be seen as subareas of the localization problem
+that need to be analyzed and studied separately.The definition of a localization system among
+sensor nodes is a fundamental issue for many
+applications of wireless sensor networks (WSNs).
+Because sensor networks may be deployed in
+inaccessible terrains or disaster relief operations, the position of sensor nodes may not be predetermined. Thus, a localization system is
+required in order to provide position information to the nodes.
+The importance of localization information
+arises from several factors, many of which are
+related only to WSNs. These factors include the
+identification and correlation of gathered data,
+node addressing, management and query of
+nodes localized in a determined region, evaluation of nodes’ density and coverage, energy map
+generation, geographic routing, object tracking,
+and other geographic algorithms. All of these
+factors make localization systems a key technology y for the development and operation of WSNs.
+In this article we address the localization
+problem from the viewpoint of a WSN. In the
+next two sections we briefly present an overview
+and definition of localization systems for WSNs
+and their components. We show the main methods used by localization systems to estimate distances and angles. We show the techniques that
+can be used by a node to compute its position,
+and how all the estimated information of distances and positions can be manipulated in
+order to allow most or all of the nodes of a WSN
+to estimate their positions. Finally, we present
+our conclusions.
+A WSN can be composed of n nodes with a communication range of r, distributed in a twodimensional squared sensor field Q = [0,s] ×
+[0,s]. For the sake of simplification, we consider
+symmetric communication link; that is, for any
+two nodes u and v, u reaches v if and only if v
+reaches u and with the same signal strength w.
+Thus, we represent the network by the Euclidean
+graph G = (V, E) with the following properties:
+• V = {v1, v2, …, vn} is the set of sensor nodes.
+• 〈i, j〉 ∈ Ε if vi reaches vj; that is, the distance
+between vi and vj is less than r.
+• w(e) ≤ r is the weight of edge e = 〈i, j〉, the distance between vi and vj
+.
+Some terms can be used to designate the
+state of a node:
+Definition 1 (Unknown Nodes — U): Also
+known as free or dumb nodes, this term refers to
+the nodes of the network that do not know their
+localization information. To allow these nodes to
+estimate their positions is the main goal of a
+localization system.
+Definition 2 (Settled Nodes — S): These nodes
+were initially unknown nodes that managed to
+estimate their positions by using the localization
+system. The number of settled nodes and the
+estimated position error of these nodes are the
+main parameters for determining the quality of a
+localization system.
+Definition 3 (Beacon Nodes — B): Also known
+as landmarks or anchors, these are the nodes
+that do not need a localization system in order
+to estimate their physical positions. Their localization is obtained by manual placement or
+external means such as GPS. These nodes form
+the base of most localization systems for WSNs.
+The localization problem can then be defined
+as follows.
+Definition 4 (Localization Problem): Given a
+multihop network G = (V, E), and a set of beacon nodes B and their positions (xb, yb), for all b
+∈ B, we want to find the position (xu, yu) of as
+many u ∈ U as possible, transforming these
+unknown nodes into settled nodes, S.
+THE COMPONENTS OF LOCALIZATION SYSTEMS
+Localization systems can be divided into three
+distinct components:
+• Distance/angle estimation: This component is
+responsible for estimating information about
+the distances and/or angles between two
+nodes. This information will be used by the
+other components of the localization system.
+• Position computation: This component is
+responsible for computing a node’s position
+based on available information concerning distances/angles and positions of reference nodes.
+• Localization algorithm: This is the main component of a localization system. It determines
+how the available information will be manipulated in order to allow most or all of the nodes
+of a WSN to estimate their positions.
+Figure 1 depicts this component division.
+Besides providing a didactic viewpoint, the
+importance of such a division into components
+comes, as we will see, from the need to recognize that the final performance of a localization
+system depends directly on each of these components. Also, each component has its own goal
+and methods of solution. They can thus be seen
+as subareas of the localization problem that
+need to be analyzed and studied separately.
+Distance/angle estimation consists in identifying
+the distance or angle between two nodes. Such
+estimates constitute an important component of
+localization systems, because they are used by
+both the position computation and localization
+algorithm components.
+Different methods can be used to estimate
+such information. Some of these methods are very accurate, but with higher costs (in terms of
+hardware, energy, and processor resources),
+while others are less accurate but already available on most sensor nodes.
+In the following sections some of the main
+methods used by localization systems to estimate
+distances/angles will be studied. These methods
+include received signal strength indication
+(RSSI), time of arrival/time difference of arrival
+(ToA/TDoA), angle of arrival (AoA), and communication range.
+RECEIVED SIGNAL STRENGTH INDICATOR
+RSSI can be used to estimate the distance
+between two nodes based on the strength of the
+signal received by another node. As depicted in
+Fig. 2a, a sender node sends a signal with a
+determined strength that fades as the signal
+propagates. The bigger the distance to the
+receiver node, the lesser the signal strength
+when it arrives at that node.
+Theoretically, the signal strength is inversely
+proportional to squared distance, and a known
+radio propagation model can be used to convert
+the signal strength into distance. However, in
+real-world environments, this indicator is highly
+influenced by noises, obstacles, and the type of
+antenna, which makes it hard to model mathematically. In these cases it is common to make a
+system calibration, where values of RSSI and
+distances are evaluated ahead of time in a controlled environment.
+This method, like the others, has both advantages and disadvantages. The main advantage is
+its low cost, because most receivers are capable of estimating the received signal strength. The
+disadvantage of this method is that it is very susceptible to noise and interference, which results
+in higher inaccuracies of distance estimations.
+Some experiments show errors from 2 to 3 m
+in scenarios where all nodes are placed in a
+plane field 1.5 m from the ground with a communication range of 10 m.
+Although RSSI shows plausible results in simulations and controlled experiments, its usage in
+real-world applications is still questionable .
+But, considering its low cost, it is possible that a
+more sophisticated and precise use of RSSI (e.g.,
+with better transmitters) could become the most
+used technology of distance estimation from the
+cost/precision viewpoint . However, this technology is not yet available.
+TIME [DIFFERENCE] OF ARRIVAL
+Different methods try to estimate distances
+between two nodes using time based measures.
+The most simple and intuitive is ToA. In this
+case the distance between two nodes is directly
+proportional to the time the signal takes to
+propagate from one point to another. This way,
+if a signal was sent at time t1 and reached the
+receiver node at time t2, the distance between
+sender and receiver is d = sr(t2 – t1), where sr is
+the propagation speed of the radio signal (speed
+of light), and t1 and t2 are the times when the
+signal was sent and received (Fig. 2b). This type
+of estimation requires precisely synchronized
+nodes and the time at which the signal leaves the
+node must be in the packet that is sent.
+TDoA is based on:
+The difference in the times at which a single
+signal from a single node arrives at three or
+more nodes, The difference in the times at which multiple
+signals from a single node arrive at another
+node
+The first case, which is more common in cellular
+networks, requires precisely synchronized receiver nodes (in this case base stations). In the second case, more common and suitable for WSNs,
+the nodes must be equipped with extra hardware
+capable of sending two types of signals simultaneously. These signals must have different propagation speeds, like radio/ultrasound [7] or
+radio/acoustic . Usually, the first signal is the
+packet itself, which propagates at the speed of
+light (≈ 300.000 km/s), while the second signal is
+some kind of sound, because of its slower propagation (≈ 340 m/s), which is six orders of magnitude slower then the first signal.
+An example of TDoA suitable for WSNs is
+used by [3] and depicted in Fig. 2c, where an
+ultrasound pulse is sent simultaneously with a
+radio signal. In this case nodes compute the difference in the arrival times of the two signals.
+The distance can now be computed by the formula d = (sr – ss)*(t2 – t1), where sr and ss are
+the propagation speed of the radio and ultrasound signals, and t1 and t2 are the arrival times
+of the radio and ultrasound signals, respectively.
+Another different and interesting way of computing distance among nodes using the TDoA is
+proposed by Fu et al. [8], and is based on the
+direct sequence spread spectrum (DSSS) modulation technique.
+\The errors in the distance estimations
+obtained by TDoA are approximately centimeters. Experiments with ultrasound performed in
+ indicate errors of about 2 or 3 cm (smaller
+than the sensor node) in scenarios where nodes
+were separated by distances of 3 m. In acoustic sound was tested, and results showed errors
+of about 23 cm, with nodes at distances of 2 m.
+Despite the lower errors, these systems have
+disadvantages. The first is the need for extra
+hardware to send the second signal, which
+increases node cost. The second disadvantage is
+the generally limited range of the second signal,
+which is normally between 3 and 10 m with more
+powerful transmitters.
+ANGLE/DIRECTION OF ARRIVAL
+The AoA of the signal  can also be used
+by localization systems. This angle can be in
+relation to the node itself, to an electronic compass, or to a second signal received by the node.
+The estimation of the AoA is done by using
+directive antennas or an array of receivers — usually three or more — that are uniformly separated.
+In the last case, based on the arrival times of the
+signal at each of the receivers, it becomes possible
+to estimate the AoA of this signal (Fig. 2d).
+Experiments show that this method has an
+inaccuracy of some degrees (about 5° in ). The
+need for extra hardware and a minimum distance
+between the receivers results in some disadvantages in terms of the cost and size of nodes.
+COMMENTS ABOUT THE
+DISTANCE/ANGLE ESTIMATION
+The choice of which method to use to estimate
+the distance between nodes in a localization system is an important factor that influences the
+final performance of the system. Usually, as
+shown in the next section, to estimate a position,
+a node uses at least three distance estimations,
+each with an associated error. On the other
+hand, if only the accuracy of these methods was
+important, we could just use TDoA since it has
+fewer errors. However, factors including the size
+and cost (in terms of hardware, processor, and
+energy) of the nodes must also be taken into
+consideration. Thus, the method chosen for estimating distances depends on the application
+requirements as well as available resources.
+POSITION COMPUTATION
+When a node has enough information about distances and/or angles and positions, it can compute its own position using one of the methods
+studied in this section.
+Several methods can be used to compute the
+position of a node. Such methods include trilateration, multilateration, triangulation, probabilistic approaches, bounding box, and the central
+position. The choice of which method to use also
+impacts the final performance of the localization
+system. Such a choice depends on the information available and the processor’s limitations.
+TRILATERATION AND MULTILATERATION
+Trilateration is the most basic and intuitive
+method. This method computes a node’s position via the intersection of three circles, as
+depicted in Fig. 3a. To estimate its position
+using trilateration, a node needs to know the
+positions of three reference nodes and its distance from each of these nodes. Distances can
+be estimated using one of the methods explained
+in the previous section.
+The circles formed by the position and distance to each of the references can be represented by the formula (^x – xi)2 + (^y – yi)2 = di
+2,
+where(^x , ^y ) is the position we want to compute,
+(xi, yi) is the position of the ith reference node,
+and di is the distance of the ith reference node
+to the unknown node. In this case we have three
+equations with two unknowns, which can be
+solved, theoretically, in one solution.
+In real-world applications the distance estimation inaccuracies as well as the inaccurate
+position information of reference nodes make it
+difficult to compute a position. As depicted in
+Fig. 3b, the circles do not intersect at only one
+point, resulting in an infinite set of possible solutions.
+Furthermore, when a larger number of reference points are available, we can use multilateration to compute the node’s position. In this case
+an overdetermined system of equations must be
+solved. Figure 3 depicts this case. Usually,
+overdetermined systems do not have a unique
+solution. When considering n reference points
+and also the error of the distance estimations,
+which makes di = d
+^
+i – ε, the system of equations
+becomes (^x – xi)2 + (^y – yi)2 = di
+2 – e, where ε is
+normally considered to be an independent normal random variable with zero mean. This system can be linearized, by subtracting the last
+equation, into Ax ≈ b. This linear system can be
+solved easily using standard methods like the
+least squares approach.
+The number of floating point operations
+needed to compute a position depends on the
+method used to solve the system of equations. In
+the case of the least square method, (m + n/3)n2
+floating point operations (where m is the number of unknowns and n is the number of equations) are required to estimate a position.
+BOUNDING BOX
+The bounding box method proposed in [12] uses
+squares — instead of circles as in trilateration —
+to bound the possible positions of a node. An
+example of this method is depicted in Fig. 3d.
+For each reference node i, a bounding box is
+defined as a square with its center at the position of this node (xi, yi), with sides of size 2di
+(where d is the estimated distance) and with
+coordinates (xi – di, yi – di) and (xi + di, yi +
+di). The intersection of all bounding boxes can
+be easily computed without any need for floating point operations by taking the maximum of
+the low coordinates and the minimum of the
+high coordinates of all bounding boxes. This is
+the shaded rectangle in Fig. 3d. The final position of the unknown node is then computed as
+the center of the intersection of all bounding
+boxes.
+Despite the final error of this method, which
+is greater than trilateration, computing the intersection of squares uses fewer processor resources
+than computing the intersection of circles.
+TRIANGULATION
+In triangulation  information about angles
+is used instead of distances. Position computation can be done remotely (Fig. 3e) or by the
+node itself; the latter is more common in WSNs.
+In this last case, depicted in Fig. 3f, at least
+three reference nodes are required. The
+unknown node estimates its angle to each of the
+three reference nodes and, based on these angles
+and the positions of the reference nodes (which
+form a triangle), computes its own position using
+simple trigonometrical relationships. This technique is similar to trilateration. In fact, based on
+the AoAs, it is possible to derive the distances to
+reference nodes .
+PROBABILISTIC APPROACHES
+The uncertainty in distance estimations has motivated the appearance of probabilistic approaches
+for computing a node’s position. An example of a
+probabilistic approach is proposed in [11], where
+the errors in distance estimations are modeled as
+normal random variables. When an unknown
+node receives a packet from a reference node, it
+can be in any place around the reference node
+with equal probabilities. When another packet is
+received from another reference node, the
+unknown node computes its position again as
+depicted in Fig. 3g. When new position information is received from other nodes, it becomes
+possible to identify the probable location of the
+unknown node, as depicted in Fig. 3h.
+The main drawbacks of this approach are the
+high computational cost and the space required
+to store the information.
+COMMENTS ABOUT POSITION COMPUTATION
+A number of other methods exist that aim to compute the position of a node. Location fingerprinting is a method in which the signal characteristics
+obtained from a set of locations are catalogued,
+and the position computation of a node consists of
+comparing its current signal characteristics with
+those catalogued previously. This technique is
+used by Bahl et al.  and other indoor localization systems, but the need to generate a signal signature database makes this technique unfeasible
+for most scenarios of WSNs. He et al., in the
+APIT algorithm, use triangles formed by three
+beacon nodes, and a node decides if it is inside or
+outside these triangles by comparing its signal
+strength measurements with the measurements of
+its neighbors. The position of the node is computed by finding the centroid of the intersection of
+the beacon triangles the node is within.
+Other work concentrates all information
+about distances between the nodes into a central
+node and uses mathematical optimization techniques to compute the positions of the nodes. As
+an example, we have the work of Doherty et al.
+[14] who formulate the localization problem as a
+convex optimization problem based only on connectivity-induced constraints and use a semidefinite program (SDP) to solve the problem. There
+is also the work of Shang et al , who used
+multidimensional scale (MDS).
+LOCALIZATION ALGORITHM
+The localization algorithm is the main component of a localization system. This component
+determines how the information concerning distances and positions is manipulated in order to
+allow most or all of the nodes of a WSN to estimate their positions.
+Localization algorithms can be classified into
+a few categories: distributedor centralized position computation ; with 
+or without an infrastructure ; relative
+or absolute positioning; designed
+for indoor or outdoor scenarios; and
+one hop or multihop .
+Here some proposed localization algorithms
+are discussed to show how this component differentiates from the other components. These PROBABILISTIC APPROACHES
+The uncertainty in distance estimations has motivated the appearance of probabilistic approaches
+for computing a node’s position. An example of a
+probabilistic approach is proposed in , where
+the errors in distance estimations are modeled as
+normal random variables. When an unknown
+node receives a packet from a reference node, it
+can be in any place around the reference node
+with equal probabilities. When another packet is
+received from another reference node, the
+unknown node computes its position again as
+depicted in Fig. 3g. When new position information is received from other nodes, it becomes
+possible to identify the probable location of the
+unknown node, as depicted in Fig. 3h.
+The main drawbacks of this approach are the
+high computational cost and the space required
+to store the information.
+COMMENTS ABOUT POSITION COMPUTATION
+A number of other methods exist that aim to compute the position of a node. Location fingerprinting is a method in which the signal characteristics
+obtained from a set of locations are catalogued,
+and the position computation of a node consists of
+comparing its current signal characteristics with
+those catalogued previously. This technique is
+used by Bahl et al. and other indoor localization systems, but the need to generate a signal signature database makes this technique unfeasible
+for most scenarios of WSNs. He et al., in the
+APIT algorithm , use triangles formed by three
+beacon nodes, and a node decides if it is inside or
+outside these triangles by comparing its signal
+strength measurements with the measurements of
+its neighbors. The position of the node is computed by finding the centroid of the intersection of
+the beacon triangles the node is within.
+Other work concentrates all information
+about distances between the nodes into a central
+node and uses mathematical optimization techniques to compute the positions of the nodes. As
+an example, we have the work of Doherty et al.
+ who formulate the localization problem as a
+convex optimization problem based only on connectivity-induced constraints and use a semidefinite program (SDP) to solve the problem. There
+is also the work of Shang et al. , who used
+multidimensional scale (MDS).
+LOCALIZATION ALGORITHM
+The localization algorithm is the main component of a localization system. This component
+determines how the information concerning distances and positions is manipulated in order to
+allow most or all of the nodes of a WSN to estimate their positions.
+Localization algorithms can be classified into
+a few categories: distributed  or centralized position computation ; with
+or without an infrastructure; relative
+or absolute positioning ; designed
+for indoor or outdoor scenarios; and
+one hop  or multihop .
+Here some proposed localization algorithms
+are discussed to show how this component differentiates from the other components. These algorithms are the Ad Hoc Positioning System
+(APS), Recursive Position Estimation (RPE),
+and Localization with a Mobile Beacon (LMB).
+AD HOC POSITIONING SYSTEM
+In APS  a reduced number of beacon nodes
+(e.g., three or more) is deployed with the
+unknown nodes. Then each node estimates its distance to the beacon nodes in a multihop way.
+Once these distances are estimated, the nodes can
+compute their positions using trilateration. Three
+methods of hop-by-hop distance propagation are
+proposed: Dv-Hop, Dv-Distance, and Euclidean.
+In Dv-Hop APS the beacon nodes start the
+propagation of their position information (Fig.
+4a). Working as an extension of the distance vector algorithm, all nodes receive the position information of all beacon nodes as well as the number
+of hops to these beacons. When a beacon node
+receives the position information of the other
+beacon nodes, it has enough information to compute the average size of one hop based on its own
+position, the position of the other beacon nodes,
+and the number of hops between them (Fig. 4b).
+This last value is then flooded in a controlled way
+into the network as a correction factor. When an
+unknown node receives a correction, it is able to
+convert its distance to the beacon nodes from
+number of hops to meters (Fig. 4c). The complexity of message exchange in this algorithm is driven
+by the total number of beacon and normal nodes,
+which is O(n*(m + 1)), where n is the number of
+nodes and m is the number of beacon nodes.
+An advantage of the APS is that its localization algorithm requires a low number of beacon
+nodes in order to work. However, the way distances are propagated, especially in Dv-Hop and
+Dv-Distance, as well as the way these distances
+are converted from hops to meters in Dv-Hop,
+result in erroneous position computation, which
+increases the final localization error of the system.
+RECURSIVE POSITION ESTIMATION
+In RPE [16] nodes estimate their positions based
+on a set of initial beacon nodes (e.g., 5 percent
+of the nodes) using only local information. Localization information increases iteratively as newly
+settled nodes become reference nodes.
+The RPE algorithm can be divided into four
+phases, as depicted in Fig. 5. In the first phase a
+node determines its reference nodes. In the second phase the node estimates its distance to
+these reference nodes using, for example, RSSI.
+In the third phase the node computes its position using trilateration (becoming a settled
+node). In the final phase the node becomes a
+reference node by broadcasting its newly estimated position to its neighbors. When a node
+becomes a reference, it can assist other nodes in
+computing their positions as well.
+An advantage of this algorithm is that the
+number of reference nodes increases quickly, in
+such a way that the majority of the nodes can
+compute their position. But this technique has the
+disadvantage of propagating localization errors.
+This means that the inaccurate position estimation
+of one node can be used by other nodes to estimate their positions, increasing this inaccuracy.
+Furthermore, a node must have at least three reference neighbors in order to compute its position.
+LOCALIZATION WITH A MOBILE BEACON
+Some recent work has proposed the use of
+mobile beacons to assist the nodes of a WSN in
+estimating their positions. A mobile beacon is a
+node that is aware of its position (e.g., equipped
+with a GPS receiver) and has the ability to move
+around the sensor field. This beacon can be a
+human operator, an unmanned vehicle, an aircraft, or a robot.
+The system operation in is quite simple.
+Once the nodes are deployed, the mobile beacon
+travels through the sensor field broadcasting
+messages that contain its current coordinates.
+When a free node receives more than three messages from the mobile beacon it computes its
+position, using a probabilistic approach, based
+on the received coordinates and RSSI distance
+estimations. Figure 6 illustrates this scenario and
+three possible trajectories for the mobile beacon.
+The communication cost for the WSN is null,
+since none of the nodes (except the mobile beacon) need to send any packets.
+An advantage of this algorithm is that position
+estimations are computed based on the same
+node (mobile beacon), thus keeping the mean
+localization error low and preventing the propagation of this error. In addition, this algorithm
+avoids the use of nodes equipped with GPS,
+except for the mobile beacon. On the other hand,
+in this technique a sensor node can estimate its
+position only when the mobile beacon passes near
+this node, which may take a long time depending
+on such factors as the size of the sensor field, the
+beacon’s mobility capacity, and the node’s trajectory. Also, the mobile beacon may never pass
+near some nodes, because of either the trajectory
+or a problem with the mobile beacon.
+COMMENTS ABOUT LOCALIZATION ALGORITHMS
+Several localization algorithms focus on different
+aspects such as errors, number of beacons, number of settled nodes, or GPS usage, among other
+things. Usually, these algorithms [19, 20] try to
+reduce or completely remove the need for GPS
+receivers on beacon nodes. Other algorithms take
+advantage of certain network features, such as
+beacons with high-powered transmitters , a directed localization recursion, or a beacon
+infrastructure . The choice of which algorithm
+to use depends on the resources available, the scenario, the requirements of the application, and the
+mean localization error acceptable to the nodes.
+FINAL REMARKS
+This article has addressed the localization problem from the viewpoint of a WSN. We divided
+localization systems into three components: distance/angle estimation, position computation,
+and localization algorithm.
+The importance of such a division of localization systems into components lies in the need to
+recognize that the final performance of localization systems depends directly on each of these
+components. For instance, a localization system
+should achieve better results if the TDoA method is used instead of RSSI to estimate distances. The same principle applies to the other
+components. These components can be seen as
+subareas of the localization problem that need
+to be studied separately.
+A general rule in WSNs is that there is not a
+perfect solution suitable for every scenario. The
+same rule applies to the localization problem.
+This article has shown a number of proposed
+localization systems, each with an emphasis on a
+specific scenario and/or application. The necessity of different solutions for different applications
+and also the high number of possible applications of WSNs have greatly motivated the study
+and proposals of new solutions to the localization problem.
