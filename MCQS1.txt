@@ -1,0 +1,57 @@
+
+1:To address the problem that the traditional map matching process is easily affected by the resolution, the authors
+of [36] proposed an  _______  based on a free-resolution
+probability distributions map (FRPDM) using 3D LiDAR.
+a:Heuristic
+b:Metarule
+c:Algorithm
+d:Recursion
+
+2:In the 2-D vehicle localization scenario,
+the accuracy can be evaluated by calculating the mean alongtrack error Elat and across-track error Elong ( _______  and
+longitudinal errors).
+a:Spot Pass
+b:Forward Pass
+c:Lateral
+d:Lateral Pass
+
+3:Since the radar sensor has strong  _______  and
+availability, especially in extreme weather conditions, the
+author in [52] used ground penetrating radar to realize vehicle
+localization in inclement weathers.
+a:Fault
+b:Dependability
+c:Accountability
+d:Reliability
+
+4:In the 2-D vehicle localization  _______ ,
+the accuracy can be evaluated by calculating the mean alongtrack error Elat and across-track error Elong (Lateral and
+longitudinal errors).
+a:Minor Premise
+b:Major Premise
+c:Thesis
+d:Scenario
+
+5:To
+evaluate the  _______ , the economic expenses and overall
+system performance after the expansion of vehicle localization should be considered.
+a:Scalability
+b:Ratability
+
+6:Since the radar sensor has strong reliability and
+ _______ , especially in extreme weather conditions, the
+author in [52] used ground penetrating radar to realize vehicle
+localization in inclement weathers.
+a:Opportuneness
+b:Handiness
+c:Availability
+
+7:Another
+related work for investigating the hardware architectures for
+camera and LiDAR SLAM is proposed in [28], and the
+authors develop the possible fusion approach for increasing
+the localization  _______  and robustness.
+a:Air
+b:Accuracy
+c:Divisibility
+d:Correctness

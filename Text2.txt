@@ -1,0 +1,479 @@
+THE continuous growth of the number of vehicles in
+cities has had a negative impact on the people’s daily
+lives. The large number of vehicles regularly cause traffic
+jams and slowdowns, leading to excessive energy consumption and significant emissions of greenhouse gases. These
+emissions directly impact air quality, contributing to an increase of the carbon footprint. In order to solve these kind
+of problems, the intelligent transportation systems (ITS) can
+be built. ITS takes cutting-edge techniques such as information communication, automatic and intelligently control
+technique, which can enable the vehicles to run automatically according to the environment and their conditions by
+comprehensively managing vehicles. ITS has four layers: the
+physical layer, the communication layer, the operation layer,
+and the service layer. The physical layer comprises various
+sensors and information-receiving equipment in the system,
+primarily responsible for detecting the system’s environment and collecting data. The communication layer has the
+function of realizing the exchange of information between
+vehicles and other devices in the system. Meanwhile, the
+operation layer formulates the running route of vehicles and
+controls their operating modes. And the service layer enables
+automatic and intelligent system operation.
+The vehicle localization methods with high comprehensive
+performance is one of the key functions of the ITS, not
+only the vehicle localization accuracy but also the robustness and time delay performance during the localization
+process should be considered. Time delays can affect vehicle
+scheduling decisions and thus impact the system’s efficiency.
+Although the global navigation satellite system (GNSS) [1]
+[2] [3] [4] is widely used in vehicle localization, they are
+susceptible to interference from severe weather conditions
+and high buildings. Moreover, in some special environments
+with weak signals, named GNSS-denied environment [5]
+[6] [7] [8] (such as tunnels, underground parking lots, and forests), the accuracy of localization cannot be guaranteed.
+Therefore, it is necessary to use multiple sensors to achieve
+high precision localization. Multi-sensor-based localization
+methods use a variety of sensors (including proprioceptive
+sensors and exteroceptive sensors) to collect diverse and
+effective data, which can make up for the shortcomings
+of using GNSS technique alone. By taking advantage of
+artificial intelligence (AI) [9] [10] [11] [12] and data fusion
+technique (such as Kalman filter (KF) [13], extended Kalman
+filter (EKF) [14], unscented Kalman filter (UKF) [15] [16]
+[17], particle filter (PF) [18] [19] [20], etc.), the data collected
+by various sensors (such as LiDAR and different types of
+cameras) can be processed, which improves the accuracy and
+robustness of vehicle localization.
+Furthermore, the architecture of the data fusion process
+mainly includes three manners: the centralized, decentralized, and distributed. For the centralized architecture, all the
+collected data of every vehicle is transmitted to the central
+workstation where the localization process of each vehicle
+is accomplished. The centralized architecture can achieve
+real-time localization when the communication bandwidth
+and the calculation ability of the central workstation is high
+enough. However, it is difficult to deploy this kind of system
+on a large scale in the real world since it requires huge economic expenses. And in the distributed architecture, there is
+no central workstation, every vehicle realizes the localization
+on their own processors. Compared with centralized architecture, the distributed manner requires lower communication
+bandwidth, which is more suitable to achieve high real-time
+performance localization.
+Moreover, cooperative and collaborative localization
+methods can improve the efficiency of localization by using the available information shared by other vehicles or
+infrastructures. With the improvement of the communication
+techniques, such as vehicle-to-vehicle (V2V) [21], vehicleto-infrastructure (V2I) [22], and vehicle-to-everything (V2X)
+[23] [24] in the internet of things (IoT) [25] and internet
+of vehicle (IoV) [26] domain, the data sharing between
+objects in the system becomes more convenient. Cooperative
+localization enhances the cooperation between vehicles and
+infrastructures by making full use of the information in the
+system.
+A survey of vehicle localization based on visual and point
+cloud odometry methods has been proposed in [27]. Another
+related work for investigating the hardware architectures for
+camera and LiDAR SLAM is proposed in [28], and the
+authors develop the possible fusion approach for increasing
+the localization accuracy and robustness. At the same time,
+the authors of [29] propose the possible potentials and limitations for map-based vehicle localization method. However,
+the cooperative vehicle localization by using V2X communication is ignored in these papers. Moreover, although
+the vehicle accuracy as the most important performance
+of vehicle localization has been discussed in these papers,
+there is a lack of the comprehensive performance like the
+reliability, availability, scalability and real-time performance,which are also indispensable performances of robust vehicle
+positioning system.
+Therefore, the aim of this paper is to survey the state-ofthe-art localization techniques (including active and passive
+sensors based self-localization methods, V2X based cooperative vehicle localization methods, and so on.), analyze their
+comprehensive performances, and present the challenges in
+this domain. We will comprehensively discuss the state-ofthe-art vehicle localization methods in the following main
+criterion and co-criteria:
+Main criterion: Accuracy. The definition of the vehicle
+localization accuracy can be regarded as ’how close’ the
+estimated or measured position result is to the true position.
+The vehicle localization accuracy validating methods are
+proposed in [30]. In the 2-D vehicle localization scenario,
+the accuracy can be evaluated by calculating the mean alongtrack error Elat and across-track error Elong (Lateral and
+longitudinal errors). Localization accuracy can be affected by the precision of
+the sensor data, which is affected by the environment, the
+distance between targets, the view angle and other factors. In
+addition, the standard of accuracy requirement for different
+vehicle localization system is different. For collision warning
+applications, the positioning accuracy of 1 meter can meet the
+basic application requirements. If the positioning accuracy
+can reach 0.5 meters, then the application will have good
+accuracy performance [31]. Furthermore, since autonomous
+vehicles(AVs) require higher localization accuracy, a localization accuracy criteria for AVs in the United States is defined in [32]. Both the lateral and longitudinal errors should
+be 0.1 m at 95 percent confidence with the alert limit is 0.29 m in local street scenario. Additionally, another standard
+(The maximum positioning error is 0.3 m) is proposed by
+the 5G PPP (5G infrastructure public private partnership) in
+Europe. So, the state-of-the-art methods selected in our paper
+need to meet the localization accuracy standard in different
+applications.
+The co-criteria includes the availability, reliability, scalability, and real-time performance.
+Availability [31]: The availability refers to the capacity of
+vehicle localization method can be realized in different environments (including the GNSS-denied environment, weather
+extremes, and so on.). In addition, in cooperative vehicle localization domain, the standard of information sharing is defined in the in-vehicle navigation systems–communications
+message set requirements standard (ISO 15075).
+Reliability [31]: The Reliability is an important factor for
+the safety of a localization system. Moreover, the safety of
+the intended functionality standard (ISO 21448) provides
+the guidance on data collection on requirement on measurements. The standard ISO/TR 21707 provides the quality
+requirement of data being exchanged in the system.
+Scalability [33]: The scalability is the ability to realize
+localization in large-scale vehicles localization system. To
+evaluate the scalability, the economic expenses and overall
+system performance after the expansion of vehicle localization should be considered. The ISO/DIS 23150 standard can
+provide a guidance for the communication between sensors
+and data fusion unit when expanding the vehicle localization
+system in the future ITS.
+Real-time Performance [34]: In vehicle localization, the
+real-time performance can be evaluated by the system response time or the time delay of the result refresh process.
+For the cooperative vehicle localization, the communication
+delay can affect the real-time performance, the standard of
+communication delay is defined in IEEE 802.11 p.
+Based on the both main criterion and co-criteria, by using
+the reference selection method proposed in the appendix, the
+references with competitive results are determined to survey
+in our paper.
+The process of vehicle localization is shown in figure 1. It
+mainly includes the data collection and processing stage, and
+the output result is the estimation of the vehicle’s position
+and direction.
+In addition, the coordinate system in the localization domain mainly includes earth-centred inertial (ECI) coordinate
+system, earth-centred earth-fixed (ECEF) coordinate system,
+and the geographical coordinate system.
+The remaining sections of this paper are structured as
+follows: Section II discusses the active sensor-based vehicle
+localization algorithms. Section III describes the passive
+sensor-based methods. Section IV analyzes the V2X-based
+cooperative localization algorithms. Section V discusses the
+multi-sensor based methods. Section VI gives the comprehensive performance analysis of different methods and proposes their challenges. Finally, the conclusion and future
+work are presented in the last section.
+II. ACTIVE SENSOR-BASED SELF-LOCALIZATION
+In this section, we analyze and compare the state-of-theart vehicle self-localization methods which use the on-board
+active sensors in the data collection step. Active sensors,
+including LiDAR, radar, and ultrasonic sensors, they can
+emit energy to the environment and the data is collected by
+measuring the scattered or reflected signal. In the following,
+we illustrate the advantages and disadvantages of each data
+collection method. Additionally, we compare the economic
+cost of each sensor and analyze its latency, which affects
+the real-time performance during vehicle self-localization.
+For the data processing step, we discuss the advantages
+and disadvantages of each algorithm and further analyze the
+accuracy and complexity performance of each technique. The
+current main methods for the vehicle self-localization algorithm will be described in detail in the following subsections.
+A. LIDAR-BASED SELF-LOCALIZATION METHOD
+Light detection and ranging (LiDAR) can collect emitted
+laser light and calculates the distance to the target based on
+the intensity and time of the received laser, which can provide
+accurate data for vehicle localization. By processing the data
+collected by LiDAR through the use of filters, mapping, artificial intelligence (AI), and multi-method techniques, it has
+excellent accuracy performance in the vehicle localization
+domain. For a LiDAR-based method, a map (including planar
+and point-cloud maps [35]) is generally required to match
+with the point cloud data collected by LiDAR. If there is
+no prior map, the simultaneous localization and mapping
+(SLAM) method can be used to create a real-time map. The
+position of the vehicle can be determined by map matching.
+To address the problem that the traditional map matching process is easily affected by the resolution, the authors
+of [36] proposed an algorithm based on a free-resolution
+probability distributions map (FRPDM) using 3D LiDAR.
+The FRPDM stores the probability distribution converted
+by the Gaussian mixture modeling (GMM) method, which
+effectively reduces space complexity. The size of the FRPDM
+is about 0.061 MB/km, which is smaller than the extended
+line map in [37] (0.134 MB/km), the binary grid map in [38] (0.901 MB/km), and the multi-resolution Gaussian mixture
+map in [39] (44.3 MB/km). The authors also proposed a data
+association method for the point-to-probability distribution
+scan matching method. The RMSE of the lateral and longitudinal directions is 0.057 m and 0.178 m, respectively.
+Although this method can reach an average map matching
+time of 37 ms, the extraction time is 146 ms, which results
+in a higher total data processing time (183 ms). Therefore,
+this method is not sufficient for applications that require
+high real-time performance. To increase the real-time performance, the authors of [40] proposed a localization method
+based on mapping and UKF techniques, using a distanceweight map (DWM) in an underground mine environment.
+The spatial localization error is 4 cm, and the processing
+time per frame is 60 ms. In order to further improve the
+availability of localization algorithms in mountainous rural
+environments, an algorithm exploiting multi-layer LiDAR
+was proposed in [41]. A 3D normal distribution map is built
+at first, and then the normal distribution transform (NDT)
+scan matching method and the EKF technique are employed
+to estimate the position. The average absolute error of longitudinal and lateral are 0.38 m and 0.08 m with the average
+velocity 45 km/h, respectively. However, it is not reliable
+enough for autonomous driving because it may cause the
+traffic accident during demonstrations. Additionally, another
+work which can reach high accuracy localization is proposed
+in [42]. This method includes the mapping and localization
+phase. In the mapping phase, the pole detector is designed,
+and the pole landmarks are extracted by the pole detector
+from LiDAR scans. Then, the extracted pole landmarks are
+registered with a global map which is provided by the true
+trajectory. In the localization phase, the PF technique is
+implemented to realize position estimation by matching the
+pole landmarks provided by sensors with that in the map. The
+advantage of this algorithm is that the positioning RMSE is
+about 0.1 m, which can meet the accuracy requirement of
+AVs.
+Furthermore, in recent years, the AI technique is employed in the localization domain to reach high real-time
+performance. The authors of [43] proposed an improved
+lightweight deep neural network to realize the deep local
+feature extraction in day-night changes environment. A prior
+map is built by using aligned dense LiDAR point clouds
+and imagery provided by a portable camera-LiDAR sensor.
+Meanwhile, the ground truth point cloud dataset with 5 cm
+accuracy is employed to evaluate the localization accuracy
+and robustness in vision-changed conditions. The extraction
+speed of the feature in this method is 92 frames per second,
+and this work is focus on the day-night changed environment,
+which also has high availability performance. Another work
+was proposed in [44], the authors proposed a siamese neural
+network-based algorithm by using a global prior map. The
+reduced dimension scan representations learned from neural
+networks are utilized to realize place recognition, and the
+global prior map is employed to determine the vehicle’s position. The advantage of this algorithm is that the storage space for sensor data is reduced. Moreover, another work based on
+deep learning is proposed in [45]. In order to achieve fast and
+accurate information interaction during vehicle localization,
+only a few LiDAR points are used in the proposed framework. In addition, a clustering algorithm is employed to realize the non-semantic features extraction from the information
+collected by LiDAR and the data smoothing process occurs in
+the convolutional layers. In order to enhance the reliability of
+the algorithm, both the north campus long-term (NCLT) and
+Kitti dataset are used to evaluate the accuracy performance in
+the short and long term trajectory. Experimental results show
+that a reasonable accuracy (Mean positioning error is below
+1 m) can be achieved.
+In addition, a LiDAR-based road sign perception system
+using third-party sparse maps (TPSM) was proposed to improve the accuracy of traditional GNSS-based vehicle localization algorithms [46]. This system uses LiDAR to detect
+road and lane sign features and employs the PF technique
+to estimate the position of vehicle. This algorithm increases
+the accuracy by using TPSM road features (0.31 m for the
+constrained update). However, the TPSM is not suitable for
+all sensors, limiting its scalability. To address the issue that
+the traditional normalized cross-correlation (NCC) algorithm
+requires sufficient feature points, a cross means absolute difference (CMAD) algorithm based on known map information
+using 3D LiDAR is proposed in [47]. This method includes
+offline and online parts. In the offline part, the map is built,
+calibrated, and segmented. The 3D map is then transformed
+into a 2D grid map and feature extraction is performed. In the
+online part, the same procedure is used for LiDAR scanning.
+The mean energy and feature registration method are used
+to initialize location and orientation of the vehicle, and the
+drivable moving search region (DMR) method is designed
+during feature registration during the process. The RMSE is
+about 0.1-0.3 m in outdoor environments and it has good realtime performance.
+B. RADAR-BASED SELF-LOCALIZATION METHOD
+While the LiDAR-based and vision-based method can provide more precise data, radar-based methods cannot be easily
+replaced at the moment. This is because radar is the only sensor capable of accurately measuring the speed of objects under long distance conditions, as supported by Zhou et al. [48].
+Moreover, radar-based methods can offer good real-time
+performance due to their low latency during data collection,
+as highlighted by Lu et al. [34]. Additionally, radar-based
+methods are capable of functioning effectively in adverse
+weather conditions, further enhancing their reliability. Some
+popular types of radar used in vehicle localization,including
+multiple-input multiple-output radar [49], millimeter wave
+automotive radar [50], and so on.
+In order to enhance the availability of localization methods, the authors of [51] proposed an improved algorithm
+that uses a 76GHz omnidirectional millimeter-wave radar
+(MWR). They develop a novel error propagation model to
+calculate the unique noise characteristics of sensors operating in snowy environments. The process consists of four steps:
+image generation of objects, template matching, probability
+updating, and offset updating. The lateral RMSE of 0.25 m
+can be achieved, regardless of the presence or absence of
+snowfall. Since the radar sensor has strong reliability and
+availability, especially in extreme weather conditions, the
+author in [52] used ground penetrating radar to realize vehicle
+localization in inclement weathers. The positioning results
+show that the total mean positioning error (the sum of alongtrack and cross-track error) is 0.34 m, 0.39 m, and 0.77 m,
+in the clear, snow, and rain weather scenario, respectively.
+To improve the accuracy of radar based vehicle localization
+methods in urban environments, the accuracy is less than 0.5
+m with 95-percentile is achieved in [53].
+In addition, the authors of [54] proposed a machine
+learning-based algorithm by using mmWave radars operating
+in the frequency range of 77 GHz-81 GHz. This algorithm
+consists of two steps: range estimation and angle estimation.
+For range estimation, unwanted clutter is removed based on
+the properties of mainlobe clutter and sidelobe clutter, followed by estimating the average range for a certain frame. To
+improve angle estimation accuracy, a polynomial regression
+model is proposed, achieving the RMSE of 2.56 degrees.
+Another work that utilizes artificial intelligence (AI) techniques was presented in [55]. The authors designe a deep
+radar object detection network (RODNet) which uses rangeazimuth frequency heatmaps (RAMaps). RODNet increases
+the availability by incorporating three architectures, namely
+3D convolution deconvolution, 3D stacked hourglass, and
+3D stacked hourglass with temporal inception. Additionally,
+a new method for learning step is proposed by leveraging
+cross-model supervision. The latency is less than 100 ms for
+real-time performance.
+C. ULTRASONIC-BASED SELF-LOCALIZATION
+METHOD
+Ultrasonic-based sensors are commonly used in low-cost
+curb detection and localization systems due to their affordability. Additionally, the ultrasonic sensor is widely used in
+indoor positioning algorithms [56]. Nevertheless, the limited
+detection range of ultrasonic sensors (approximately 3 m)
+makes them unsuitable for long distance measurement scenarios. In other words, the scalability performance is insufficient. To increase accuracy and real-time performance of
+ultrasonic-based localization methods, the authors of [57]
+designed a low-cost curb detection and localization system
+utilizing multiple ultrasonic sensors. Initially, a ground reflection elimination filter is proposed to eliminate obvious reflections caused by ground reflections. Subsequently, the reliability of the measurement data is calculated, and a distance
+estimation algorithm is proposed by analyzing the obtained
+reliability. The complexity of this algorithm is O(N2
+), and
+when four ultrasonic sensors are implemented, the system
+achieves the accuracy with 13.5 cm on the RMSE.
+Additionally, the execution time for processing raw sensor
+data (collected over 100 seconds) is 0.58 seconds, demonstrating good real-time performance. Another method with
+excellent real-time performance was reported in [58]. To
+further enhance the availability of ultrasonic-based methods
+in GPS-denied environments, a navigation estimation system
+is designed. The raw data from the ultrasonic sensors is
+preprocessed to reduce the effects of sensor noise, and during
+GPS blockage periods, The EKF technique is employed to
+estimate the vehicle’s position. The result refresh rate is
+92 Hz, achieving excellent real-time performance.
+D. DISCUSSION
+Although LiDAR-based localization methods can provide
+high accuracy compared to other active sensor-based methods, they have higher computation requirements and economic expenses. In terms of 1D, 2D and 3D map matching
+method in LiDAR-based methods, the 3D map matching
+method can get the most accuracy and robustness localization
+result since the 3D maps have rich type of features, and
+it especially has good performance in complex scenarios.
+However, compared with 1D and 2D map-based methods,
+the storage requirement of map and the computation power
+increase dramatically compared with 1D and 2D map-based
+methods, which has bad influence on the performance of scalability. The use of AI techniques can be employed to enhance
+the accuracy and real-time performance of 3D map matching
+methods [59], which could be beneficial for applications
+where accuracy and real-time performance are crucial, such
+as autonomous driving, in the future.
+Furthermore, although radar-based localization methods
+may not always meet the accuracy requirements of autonomous driving or ITS, the radar still plays an irreplaceable
+role in the field of object detection [60]. And the radar-based
+localization system has excellent performance in extreme
+weather scenarios. On the other hand, ultrasonic sensor-based
+methods offer excellent real-time performance, as reported
+in [58], which can serve as auxiliary sensors in certain
+scenarios.
+III. PASSIVE SENSOR-BASED SELF-LOCALIZATION
+For passive sensors, such as IMU, GPS, and vision-based
+sensors, only the radiation or emission in the nature or from
+the target can be detected. In this section, we analyze the accuracy, real-time performance, and complexity performance
+of self-localization methods based on passive sensors that
+utilize popular data processing techniques, such as filters, AI,
+and mapping methods.
+A. IMU-BASED SELF-LOCALIZATION METHOD
+The IMU sensors are widely used for dead reckoning (DR)
+[61] and inertial navigation system (INS) [62]. However, a
+disadvantage of the IMU sensor is that when applied to longdistance positioning, the accumulated error can significantly
+decrease the accuracy of the final result. One approach which
+can mitigate this issue is to use multiple IMUs simultaneously to increase the accuracy of the localization system.
+In [63], the authors proposed an algorithm based on
+multiple IMUs. They employ least-square and probabilistic
+marginalization methods to map measurements from all IMU
+sensors onto a virtual IMU, and the probabilistic estimators are used to estimate the location of the vehicle. This
+algorithm achieves real-time performance with localization
+refresh time of about 10 ms, based on sensor measurement
+rates of 200 Hz. However, the RMSE of this approach is
+0.6 m. Another multi-IMU based system called real-time
+multi-IMU visual-inertial navigation system (mi-VINS) was
+proposed in [64]. In this system, in order to enhance the realtime performance, a tightly-coupled EKF based estimation
+method is proposed to fuse asynchronous measurements
+from multiple sensors. The propagation method of the joint
+covariance and state estimation of each IMU is defined.
+Furthermore, to ensure the consistency in the data fusion
+process, all the spatial and temporal calibration parameters
+are processed online for the calibration refinement of sensors,
+which can reduce the space complexity caused by offline
+steps. The RMSE of this approach is about 0.2 m with an
+average data processing time of 23 ms (43 Hz), and mi-VINS
+can increase the robustness in cases where one of the IMUs in
+the system does not work. To further increase the robustness
+of IMU-based methods, the authors of [61] proposed an
+algorithm based on KF and deep neural networks. The deep
+neural networks are utilized to optimize and provide noise
+estimates during the KF algorithm. The raw data of the IMU
+is refreshed at a rate of 100 Hz, and the translational error
+is about 1.1 percent. Additionally, in certain special environments, such as GPS-denied environments, IMU can play a
+crucial role in the localization system.Another work based
+on solely the commercial-of-the-shelf (COTS) IMU in GPSdenied environment is proposed in [65].A new developed
+Bayesian filter is proposed which can achieve the position
+error of less than 0.5 m.
+B. GPS-BASED SELF-LOCALIZATION METHOD
+GNSS, including GPS [66], Beidou [67], and Galileo [68],
+can provide convenient and low-cost global localization services by using four or more satellites. The accuracy of GPS
+is about from a few meters to twenty meters [35]. In order to
+increase the accuracy of GPS localization, various techniques
+such as real-time kinematic (RTK) [69], has been proposed.
+However, GPS accuracy is easily affected by factors such
+as obstacles, atmospheric conditions and signal blockage.
+So, the vehicle localization in GPS-denied environment is a
+popular research topic [70] [71].
+In order to improve the accuracy of GPS-based localization
+by GNSS signal reception state detection, the authors of [72]
+designed a multi-path detection system based on support
+vector machines (SVM). To enhance the effectiveness of
+the map-matching method, the authors of [73] proposed a
+spatio-temporal-based matching algorithm (STD matching)
+which considers the spatial features of roads (including road
+topology and detailed road information), vehicle speed constraints on different roads, and real-time vehicle movemenduring low-sampling rate GPS trajectories. Furthermore, the
+authors employ GPS clustering, GPS smoothing, and A∗
+algorithms to reduce the computational costs and improve the
+accuracy. The experimental result based on a road network
+containing 200,236 vertices and 90,709 road segments shows
+that the matching accuracy was over 80%, which is higher
+and more stable than the results obtained by the HMMRCM algorithm proposed in [74]. However, the running time
+with 3-10 candidate points was about 11 seconds under lowsampling rate conditions.
+Furthermore, to enhance the scalability of GPS-based localization methods, the authors of [75] designed a system
+which is intended for global-scale deployment. This system
+involves an offline map building step and an online query
+step. In the offline map building step, they design a structurefrom-motion model and congas descriptors, and the structure and appearance compression methods are employed to
+reduce data storage space. Finally, the data is stored using
+a tiled model. In the online query step, congas extraction
+and projection, 2D-3D matching and voting, and pose recovery and refinement are included. The query latency of this
+system is about 200 ms, demonstrating excellent real-time
+performance. Additionally, this system is robust compared to
+previous methods, as it delivers significantly stable results.
+Unlike previous methods, aiming at improving the GPS localization accuracy in non-line of sight (NLOS) scenario, the
+authors of [76] employed 3D mapping techniques to improve
+the conventional ranging-based GNSS localization methods.
+Specifically, they utilize terrain height-aiding techniques to
+achieve additional virtual ranging measurements, and the
+NLOS reception is predicted by using 3D city models.
+C. VISION-BASED SELF-LOCALIZATION METHOD
+Vision-based data collection methods capture target images
+through vision devices such as monocular cameras [77],
+binocular cameras [78], or panoramic thermal cameras [79],
+and then the effective feature data can be extracted from the
+images. The SLAM algorithm [80] [81] [82] [83], which
+is a basic vehicle localization algorithm using vision sensors, is widely implemented in urban environment. SLAM
+algorithms include visual SLAM (vSLAM) [84], centralized
+collaborative monocular SLAM [85], and so on.
+The vSLAM technique is widely used in vehicle localization and it mainly includes three modules: initialization,
+tracking, and mapping [86]. The initialization module is
+responsible for establishing the coordinate system, and the
+tracking and mapping modules have the function of building and updating the map. Meanwhile, the authors of [87]
+proposed a method which utilizes the LiDAR-based map,
+which can achieve the real-time performance on 0.06s and
+the RMSE is about 0.1 m. In order to further enhance the
+real-time performance, a topview system based on real-time
+capable image processing pipeline was designed in [88],
+and the estimation of position is realized by processing data
+collected by four fisheye cameras. The accuracy of this algorithm is about 0.33 m on the worst condition, and the resultrefresh time is 0.04 s. Furthermore, another work with high
+accuracy and real-time performance based on visual sensor
+is proposed in [89]. In the developed method, the back lane
+markings registry (BLMR) and data matching method with
+light-weigh is used. The visual lane marking is detected by
+sensors and matched with map, for the purpose of estimating
+the position of vehicle in the map reference. Additionally,
+the proposed algorithm has high reliability and availability,
+which can realize data processing and positioning even if
+the lane markings can not be observed by a short distance
+detection. The positioning mean error of this method is 0.06
+m, for the real-time performance, the result refresh time is
+7.66 ms.
+Meanwhile, another work called high-speed pavement visual odometry (HSP-VO) method based on two cameras
+was proposed in [90]. The data collected by the lateral
+camera is used to match with the sparse visual map (noting
+that the sparse visual map is created in the offline step),
+which includes GPS coordinates, visual features, and the
+3D information. Another down-view high-speed camera is
+used to increase the efficiency of feature extraction during
+the vehicle’s movement at high speed. Moreover, the KF
+technique is employed to fuse the data provided by the two
+cameras. The accuracy of this method is 0.19 m on mean
+error. In addition, the mean time consumption of the feature
+extraction and matching process by using raw images is about
+14.1 ms, which is an excellent real-time performance
